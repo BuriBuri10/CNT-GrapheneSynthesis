@@ -1,0 +1,16 @@
+<!-- train.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Training Results</title>
+</head>
+<body>
+    <h2>Best Hyperparameters from Bayesian Optimization</h2>
+    <ul>
+        {% for key, value in best_params.items() %}
+            <li>{{ key }}: {{ value }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/">Return to Home</a>
+</body>
+</html>

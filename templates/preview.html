@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dataset Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        .table-container {
+            max-width: 90%;
+            margin: auto;
+            overflow-x: auto; /* Enables horizontal scrolling */
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 600px; /* Ensures wide tables scroll instead of shrinking */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        a {
+            text-decoration: none;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>📊 Dataset Analysis Report</h2>
+
+    <h2>Dataset Statistics</h2>
+    <div class="table-container">{{ stats|safe }}</div>
+
+    <h2>Missing Values</h2>
+    <div class="table-container">{{ missing_values|safe }}</div>
+
+    {% if histogram_path %}
+    <h2>Score Distribution</h2>
+    <img src="{{ url_for('static', filename='analysis.png') }}" alt="Score Distribution Graph">
+    <br>
+    <a href="{{ url_for('download_analysis') }}" download>
+        <button>⬇️ Download Analysis Report</button>
+    </a>
+    {% endif %}
+    
+    <br>
+    <a href="{{ url_for('predict') }}">
+        <button>➡️ Proceed to Prediction</button>
+    </a>
+    
+    <br>
+    <a href="/">
+        <button style="background-color: #dc3545;">🔄 Upload Another File</button>
+    </a>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Dataset</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            font-size: 14px;
+        }
+        .file-input {
+            border: 2px dashed #007bff;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #eef4ff;
+            transition: 0.3s;
+        }
+        .file-input:hover, .file-input.dragover {
+            background-color: #dde9ff;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #007bff;
+            cursor: pointer;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📂 Upload Your Dataset</h2>
+        <p>Accepted formats: CSV, Excel (.xls, .xlsx)</p>
+        
+        <form action="/" method="post" enctype="multipart/form-data">
+            <div class="file-input" id="drop-area" onclick="document.getElementById('file').click();">
+                <label for="file">📁 Click or Drag & Drop a File Here</label>
+                <input type="file" name="file" id="file" required onchange="updateFileName(event)">
+                <p id="file-name">No file chosen</p>
+            </div>
+            <button type="submit" id="upload-btn" class="hidden">⬆️ Upload & Analyze</button>
+        </form>
+    </div>
+
+    <script>
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file');
+        const fileNameDisplay = document.getElementById('file-name');
+        const uploadBtn = document.getElementById('upload-btn');
+
+        function updateFileName(event) {
+            const file = event.target.files[0];
+            if (file) {
+                fileNameDisplay.textContent = file.name;
+                uploadBtn.classList.remove('hidden');
+            } else {
+                fileNameDisplay.textContent = "No file chosen";
+                uploadBtn.classList.add('hidden');
+            }
+        }
+
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropArea.classList.add('dragover');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('dragover');
+        });
+
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropArea.classList.remove('dragover');
+
+            const file = event.dataTransfer.files[0];
+            if (file) {
+                fileInput.files = event.dataTransfer.files;  // Assign dropped file to input element
+                updateFileName({ target: fileInput });
+            }
+        });
+    </script>
+</body>
+</html>
+

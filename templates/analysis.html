@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dataset Analysis</title>
+</head>
+<body>
+    <h2>Dataset Statistics</h2>
+    {{ stats|safe }}
+
+    <h2>Missing Values</h2>
+    {{ missing_values|safe }}
+
+    {% if plot_path %}
+    <h2>Histogram (First Numeric Column)</h2>
+    <img src="{{ url_for('static', filename='histogram.png') }}" alt="Histogram">
+    {% endif %}
+    
+    <br>
+    <a href="/">Upload Another File</a>
+</body>
+</html>
